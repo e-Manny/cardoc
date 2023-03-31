@@ -5,7 +5,7 @@ function Navigation() {
   return (
     <>
       <header>
-        <nav class="navbar navbar-secondary navbar-expand-lg bg-light sticky-top">
+        <nav class="navbar navbar-secondary navbar-expand-lg bg-light">
           <div class="container-fluid">
             <Link class="navbar-brand navbar-links" to="/">
               CarDoc

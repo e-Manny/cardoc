@@ -28,7 +28,6 @@ const vehicleSchema = mongoose.Schema(
   { collection: "vehicles" }
 );
 
-// SCHEMA: Define the collection's schema.
 const maintenanceSchema = mongoose.Schema(
   {
     vehicleId: { type: String, required: true },
@@ -37,9 +36,18 @@ const maintenanceSchema = mongoose.Schema(
   { collection: "maintenance" }
 );
 
+const recallsSchema = mongoose.Schema(
+  {
+    vehicleId: { type: String, required: true },
+    data: { type: Array, required: true },
+  },
+  { collection: "recalls" }
+);
+
 // Compile the model from the schema.
 const Vehicle = mongoose.model("Vechile", vehicleSchema);
 const Maintenance = mongoose.model("Maintenance", maintenanceSchema);
+const Recalls = mongoose.model("Recalls", recallsSchema);
 
 // CREATE model *****************************************
 const createVehicle = async (year, make, model, miles) => {
@@ -60,6 +68,14 @@ const createMaintenance = async (vehicleId, data) => {
   return maintenance.save();
 };
 
+const createRecalls = async (vehicleId, data) => {
+  const recalls = new Recalls({
+    vehicleId: vehicleId,
+    data: data,
+  });
+  return recalls.save();
+};
+
 // RETRIEVE model *****************************************
 // Retrieve based on a filter and return a promise.
 const findVehicle = async () => {
@@ -73,16 +89,23 @@ const findVehicleById = async (_id) => {
   return query.exec();
 };
 
-const findMaintenanceByVehicleId = async (vehicleId) => {
-  const query = Maintenance.findById(vehicleId);
+const findMaintenanceByVehicleId = async (Id) => {
+  const query = Maintenance.find({ vehicleId: Id });
+  return query.exec();
+};
+
+const findRecallsByVehicleId = async (Id) => {
+  const query = Recalls.find({ vehicleId: Id });
   return query.exec();
 };
 
 // Export our variables for use in the controller file.
 export {
   createVehicle,
+  createRecalls,
   findVehicle,
   findVehicleById,
   createMaintenance,
   findMaintenanceByVehicleId,
+  findRecallsByVehicleId,
 };

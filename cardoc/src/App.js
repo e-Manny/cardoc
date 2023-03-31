@@ -17,6 +17,7 @@ function App() {
     <>
       <Router>
         <Navigation />
+
         <main>
           <Route path="/" exact>
             <HomePage />

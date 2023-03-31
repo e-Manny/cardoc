@@ -43,9 +43,9 @@ function AboutUs() {
             <h2 class="fw-normal">Alex Hollinghead</h2>
             <p>
               Alex Hollinghead was a first year postbacc student at OSU from
-              Philadelphia, PA who heled on the first iteration of this project.
-              His focus in this project was developing the Flask components in
-              the original version.
+              Philadelphia, PA who helped on the first iteration of this
+              project. His focus on this project was developing the Flask
+              components in the original version.
             </p>
             <p>
               <a

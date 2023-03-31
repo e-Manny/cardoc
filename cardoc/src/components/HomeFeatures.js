@@ -14,8 +14,7 @@ function HomeFeatures() {
                 src={checkEngine}
                 class="d-block mx-lg-auto img-fluid"
                 alt="Bootstrap Themes"
-                width="700"
-                height="300"
+                style={{ maxHeight: 400, maxWidth: 400 }}
                 loading="lazy"
               />
             </div>
@@ -26,8 +25,8 @@ function HomeFeatures() {
                 away! With CarDoc's dynamic maintenance mananger, you can view
                 new vehicle maintenance items as they becomes due when your
                 car's mileage increases. You will also gain access to your
-                vehicle's maintenance history to view all of the past services
-                you have completed!
+                vehicle's past preventative maintenance to view the past
+                services you should have completed within 10,000 miles!
               </p>
             </div>
           </div>
@@ -39,8 +38,7 @@ function HomeFeatures() {
                 src={service}
                 class="d-block mx-lg-auto img-fluid"
                 alt="Bootstrap Themes"
-                width="700"
-                height="300"
+                style={{ maxHeight: 400, maxWidth: 400 }}
                 loading="lazy"
               />
             </div>
@@ -63,8 +61,7 @@ function HomeFeatures() {
                 src={mobileApp}
                 class="d-block mx-lg-auto img-fluid"
                 alt="Bootstrap Themes"
-                width="700"
-                height="300"
+                style={{ maxHeight: 400, maxWidth: 400 }}
                 loading="lazy"
               />
             </div>

@@ -66,8 +66,48 @@ export const AddVehicle = () => {
     }
   };
 
+  const fetchRecalls = async () => {
+    const response = await fetch("https://ember-messy-paw.glitch.me/temp");
+    // const response = await fetch(
+    //   `http://api.carmd.com/v3.0/recall?year=${year}&make=${make}&model=${model}`,
+    //   {
+    //     headers: {
+    //       "content-type": "application/json",
+    //       authorization:
+    //         "Basic YThiMzNkYTYtMzY3ZS00Y2VlLWExM2ItN2JmZTljMTQ3ZTlm",
+    //       "partner-token": "66c5671f6d874084aa63022a54bb9e22",
+    //     },
+    //   }
+    // );
+    const recalls = await response.json();
+    const vehicleID = year + model + miles;
+    const data = recalls.data;
+    console.log(data);
+    const newRecalls = { vehicleID, data };
+    const response2 = await fetch("https://ember-messy-paw.glitch.me/recalls", {
+      method: "post",
+      body: JSON.stringify(newRecalls),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    if (response.status === 200) {
+      console.log("Successfully fetched the vehicle recalls!");
+    } else {
+      alert(
+        `Failed to fetch vehicle recalls, status code = ${response.status}`
+      );
+    }
+    if (response2.status === 201) {
+      console.log("Successfully added the vehicle recalls!");
+    } else {
+      alert(`Failed to add vehicle recalls, status code = ${response2.status}`);
+    }
+    window.location.reload();
+  };
+
   const masterCall = async () => {
-    await addVehicle().then(fetchMaintenance());
+    await addVehicle().then(fetchMaintenance()).then(fetchRecalls());
   };
 
   return (
