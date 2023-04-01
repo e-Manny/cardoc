@@ -20,6 +20,7 @@ export const AddVehicle = () => {
     } else {
       alert(`Failed to add vehicle, status code = ${response.status}`);
     }
+    window.location.reload();
   };
 
   const fetchMaintenance = async () => {
@@ -35,34 +36,41 @@ export const AddVehicle = () => {
         },
       }
     );
-    const services = await response.json();
-    const vehicleID = year + model + miles;
-    const data = services.data;
-    console.log(data);
-    const newMaintenance = { vehicleID, data };
-    const response2 = await fetch(
-      "https://ember-messy-paw.glitch.me/maintenance",
-      {
-        method: "post",
-        body: JSON.stringify(newMaintenance),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    );
-    if (response.status === 200) {
-      console.log("Successfully fetched the vehicle maintenance!");
-    } else {
+    if (response.status !== 200) {
       alert(
         `Failed to fetch vehicle maintenance, status code = ${response.status}`
       );
-    }
-    if (response2.status === 201) {
-      console.log("Successfully added the vehicle maintenance!");
     } else {
-      alert(
-        `Failed to add vehicle maintenance, status code = ${response2.status}`
-      );
+      const services = await response.json();
+      const vehicleID = year + model + miles;
+      const data = services.data;
+      if (data === null) {
+        alert(
+          " You entered an invalid vehicle. Please check your spelling and try again. "
+        );
+      } else {
+        console.log("Successfully fetched the vehicle maintenance!");
+        console.log(data);
+        const newMaintenance = { vehicleID, data };
+        const response2 = await fetch(
+          "https://ember-messy-paw.glitch.me/maintenance",
+          {
+            method: "post",
+            body: JSON.stringify(newMaintenance),
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        );
+        if (response2.status !== 201) {
+          alert(
+            `Failed to add vehicle maintenance, status code = ${response2.status}`
+          );
+        } else {
+          console.log("Successfully added the vehicle maintenance!");
+          fetchRecalls();
+        }
+      }
     }
   };
 
@@ -79,36 +87,41 @@ export const AddVehicle = () => {
         },
       }
     );
-    const recalls = await response.json();
-    const vehicleID = year + model + miles;
-    const data = recalls.data;
-    console.log(data);
-    const newRecalls = { vehicleID, data };
-    const response2 = await fetch("https://ember-messy-paw.glitch.me/recalls", {
-      method: "post",
-      body: JSON.stringify(newRecalls),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-    if (response.status === 200) {
-      console.log("Successfully fetched the vehicle recalls!");
-    } else {
+    if (response.status !== 200) {
       alert(
         `Failed to fetch vehicle recalls, status code = ${response.status}`
       );
-    }
-    if (response2.status === 201) {
-      console.log("Successfully added the vehicle recalls!");
     } else {
-      alert(`Failed to add vehicle recalls, status code = ${response2.status}`);
+      console.log("Successfully fetched the vehicle recalls!");
+      const recalls = await response.json();
+      const vehicleID = year + model + miles;
+      const data = recalls.data;
+      console.log(data);
+      const newRecalls = { vehicleID, data };
+      const response2 = await fetch(
+        "https://ember-messy-paw.glitch.me/recalls",
+        {
+          method: "post",
+          body: JSON.stringify(newRecalls),
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      if (response2.status === 201) {
+        console.log("Successfully added the vehicle recalls!");
+        addVehicle();
+      } else {
+        alert(
+          `Failed to add vehicle recalls, status code = ${response2.status}`
+        );
+      }
     }
-    window.location.reload();
   };
 
-  const masterCall = async () => {
-    await addVehicle().then(fetchMaintenance()).then(fetchRecalls());
-  };
+  // const masterCall = async () => {
+  //   await addVehicle().then(fetchMaintenance()).then(fetchRecalls());
+  // };
 
   return (
     <>
@@ -213,7 +226,7 @@ export const AddVehicle = () => {
               <button
                 type="button"
                 class="btn btn-primary"
-                onClick={masterCall}
+                onClick={fetchMaintenance}
                 data-bs-dismiss="modal"
               >
                 Save changes
