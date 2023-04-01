@@ -108,8 +108,13 @@ app.get("/recalls/:id", (req, res) => {
     });
 });
 
+// GET json test2
+app.get("/maint", (req, res) => {
+  res.send(response2);
+});
+
 // GET json test
-app.get("/temp", (req, res) => {
+app.get("/recall", (req, res) => {
   res.send(response);
 });
 

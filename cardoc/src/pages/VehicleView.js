@@ -7,22 +7,29 @@ function VehicleView() {
   const { year, make, model, miles } = useParams();
   const vehicleId = year + model + miles;
   const [maintenance, setMaintenance] = useState([]);
+  const [recalls, setRecalls] = useState([]);
 
   // RETRIEVE the list of maintenance
-  const loadMaintenance = async () => {
+  const loadMaintenanceRecalls = async () => {
     const response = await fetch(
       `https://ember-messy-paw.glitch.me/maintenance/${vehicleId}`
     );
     const services = await response.json();
     setMaintenance(services[0].data);
+    const response2 = await fetch(
+      `https://ember-messy-paw.glitch.me/recalls/${vehicleId}`
+    );
+    const recalls = await response2.json();
+    setRecalls(recalls[0].data);
   };
 
   // LOAD the maintenance
   useEffect(() => {
-    loadMaintenance();
+    loadMaintenanceRecalls();
   }, []);
 
   console.log(maintenance);
+  console.log(recalls);
 
   return (
     <>
@@ -37,7 +44,7 @@ function VehicleView() {
           {year} {make} {model} - {miles} Miles
         </h1>
       </div>
-      <ServiceTable services={maintenance}></ServiceTable>
+      <ServiceTable services={maintenance} recalls={recalls}></ServiceTable>
     </>
   );
 }
