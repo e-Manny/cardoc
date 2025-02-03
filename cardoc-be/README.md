@@ -1,17 +1,19 @@
 PROJECTED FS:
 /cardoc-be
-├── src/ # Source code (TypeScript files)
-│ ├── index.ts # Main entry file
-│ ├── routes/ # API route handlers
-│ ├── controllers/ # Business logic
-│ ├── models/ # Database models
-│ ├── services/ # Helper services
-│ ├── utils/ # Utility functions
-│ ├── middlewares/ # Express middlewares
-│ └── config/ # Configuration files
-├── dist/ # Compiled JavaScript output
-├── node_modules/ # Dependencies
-├── package.json # Project metadata & scripts
-├── tsconfig.json # TypeScript configuration
-├── .gitignore # Files to ignore in Git
-└── README.md # Documentation
+├── src/
+│ ├── config/
+│ │ ├── database.ts # Database connection
+│ ├── controllers/
+│ │ ├── authController.ts # Login & Registration logic
+│ │ ├── userController.ts # User-related API handlers
+│ ├── models/
+│ │ ├── User.ts # User Mongoose schema & model
+│ ├── routes/
+│ │ ├── authRoutes.ts # Authentication routes
+│ │ ├── userRoutes.ts # User routes
+│ ├── services/
+│ │ ├── userService.ts # User database operations (CRUD)
+│ ├── middlewares/
+│ │ ├── authMiddleware.ts # JWT authentication middleware
+│ ├── utils/ # Utility/helper functions
+│ ├── main.ts # Main entry file
